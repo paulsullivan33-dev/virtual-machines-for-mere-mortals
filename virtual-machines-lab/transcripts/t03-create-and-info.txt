@@ -1,0 +1,44 @@
+$ qemu-img create -f qcow2 specimen.qcow2 8G
+Formatting 'specimen.qcow2', fmt=qcow2 cluster_size=65536 extended_l2=off compression_type=zlib size=8589934592 lazy_refcounts=off refcount_bits=16
+[exit 0]
+$ qemu-img create -f raw specimen.raw 8G
+Formatting 'specimen.raw', fmt=raw size=8589934592
+[exit 0]
+$ qemu-img info specimen.qcow2
+image: specimen.qcow2
+file format: qcow2
+virtual size: 8 GiB (8589934592 bytes)
+disk size: 196 KiB
+cluster_size: 65536
+Format specific information:
+    compat: 1.1
+    compression type: zlib
+    lazy refcounts: false
+    refcount bits: 16
+    corrupt: false
+    extended l2: false
+Child node '/file':
+    filename: specimen.qcow2
+    protocol type: file
+    file length: 192 KiB (197120 bytes)
+    disk size: 196 KiB
+[exit 0]
+$ qemu-img info specimen.raw
+image: specimen.raw
+file format: raw
+virtual size: 8 GiB (8589934592 bytes)
+disk size: 4 KiB
+Child node '/file':
+    filename: specimen.raw
+    protocol type: file
+    file length: 8 GiB (8589934592 bytes)
+    disk size: 4 KiB
+[exit 0]
+$ ls -lh specimen.qcow2 specimen.raw
+-rw-r----- 1 root nogroup 193K Oct 22 00:16 specimen.qcow2
+-rw-r----- 1 root nogroup 8.0G Oct 22 00:16 specimen.raw
+[exit 0]
+$ du -h specimen.qcow2 specimen.raw
+196K	specimen.qcow2
+4.0K	specimen.raw
+[exit 0]

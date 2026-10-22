@@ -1,0 +1,21 @@
+$ qemu-img convert -f qcow2 -O raw specimen.qcow2 converted.raw
+[exit 0]
+$ qemu-img convert -f raw -O qcow2 converted.raw roundtrip.qcow2
+[exit 0]
+$ qemu-img convert -f qcow2 -O vmdk specimen.qcow2 specimen.vmdk
+[exit 0]
+$ qemu-img convert -f qcow2 -O vdi specimen.qcow2 specimen.vdi
+[exit 0]
+$ qemu-img convert -f qcow2 -O vhdx specimen.qcow2 specimen.vhdx
+[exit 0]
+$ qemu-img compare -f qcow2 -F raw specimen.qcow2 converted.raw
+Images are identical.
+[exit 0]
+$ ls -lh specimen.qcow2 converted.raw roundtrip.qcow2 specimen.vmdk specimen.vdi specimen.vhdx
+-rw-r----- 1 root nogroup 8.0G Oct 22 00:16 converted.raw
+-rw-r----- 1 root nogroup 2.4M Oct 22 00:16 roundtrip.qcow2
+-rw-r----- 1 root nogroup 2.4M Oct 22 00:16 specimen.qcow2
+-rw-r----- 1 root nogroup 2.1M Oct 22 00:16 specimen.vdi
+-rw-r----- 1 root nogroup  40M Oct 22 00:16 specimen.vhdx
+-rw-r----- 1 root nogroup 3.1M Oct 22 00:16 specimen.vmdk
+[exit 0]

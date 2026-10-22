@@ -1,0 +1,82 @@
+Virtual machines commands — the everyday set
+from "Virtual Machines for Mere Mortals"
+====================================================================
+
+The disk commands below were run on the build
+machine against the specimen disks and captured
+in virtual-machines-lab/transcripts/. The boot
+command ran under software emulation (TCG): the
+build machine has no /dev/kvm. On your own
+hardware, add the accelerator as noted and the
+same command runs at near-native speed.
+
+
+CHECK YOUR MACHINE FIRST (chapter 1)
+--------------------
+    ls /dev/kvm                 present and writable means KVM is ready
+    grep -o -m1 -E 'vmx|svm' /proc/cpuinfo
+                                vmx (Intel) or svm (AMD) means the CPU
+                                has the virtualization extensions
+    qemu-system-x86_64 --version
+    qemu-system-x86_64 -accel help
+                                the accelerators this build knows
+
+
+MAKE A DISK (chapter 5)
+--------------------
+    qemu-img create -f qcow2 specimen.qcow2 8G
+    qemu-img create -f raw specimen.raw 8G
+    qemu-img info specimen.qcow2
+                                virtual size (what the guest sees) vs
+                                disk size (what the host file holds)
+    ls -lh specimen.*           the host's-eye view of the same fact
+
+
+TOUCH THE DISK WITHOUT A VM (chapter 5)
+--------------------
+    qemu-io -c 'write -P 0x41 0 1M' specimen.qcow2
+                                writes a pattern, like a guest would
+    qemu-img check specimen.qcow2
+    qemu-img resize specimen.qcow2 +2G
+                                grows the pretend disk; the guest's
+                                partitions are a separate step
+
+
+CONVERT (chapters 5 and 10)
+--------------------
+    qemu-img convert -f qcow2 -O raw specimen.qcow2 out.raw
+    qemu-img convert -f qcow2 -O vmdk specimen.qcow2 out.vmdk
+    qemu-img convert -f qcow2 -O vdi specimen.qcow2 out.vdi
+    qemu-img convert -f qcow2 -O vhdx specimen.qcow2 out.vhdx
+    qemu-img compare -f qcow2 -F raw specimen.qcow2 out.raw
+
+
+SNAPSHOTS INSIDE ONE IMAGE (chapter 6)
+--------------------
+    qemu-img snapshot -c before-changes specimen.qcow2
+    qemu-img snapshot -l specimen.qcow2
+    qemu-img snapshot -a before-changes specimen.qcow2
+    qemu-img snapshot -d before-changes specimen.qcow2
+    (a snapshot is a rewind button inside the
+     same file — it is NOT a backup; copy the
+     image somewhere else for that)
+
+
+RUN A MACHINE (chapter 3)
+--------------------
+    qemu-system-x86_64 \
+      -m 512 -smp 1 \
+      -drive file=specimen.qcow2,format=qcow2,if=virtio \
+      -cdrom tinycore.iso -boot d \
+      -netdev user,id=net0 -device virtio-net-pci,netdev=net0
+
+    Add "-accel kvm" on a host with /dev/kvm.
+    Without it QEMU uses TCG emulation, as the
+    lab's boot did — correct, complete, slow.
+
+    -display none -serial file:boot.log
+                                the lab's arrangement: no window,
+                                the guest's console read from a log
+    -netdev user,id=net0,hostfwd=tcp::2222-:22
+                                the port forward of chapter 7:
+                                host port 2222 reaches guest port 22

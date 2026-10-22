@@ -1,0 +1,41 @@
+$ qemu-img info resize-me.qcow2
+image: resize-me.qcow2
+file format: qcow2
+virtual size: 8 GiB (8589934592 bytes)
+disk size: 2.32 MiB
+cluster_size: 65536
+Format specific information:
+    compat: 1.1
+    compression type: zlib
+    lazy refcounts: false
+    refcount bits: 16
+    corrupt: false
+    extended l2: false
+Child node '/file':
+    filename: resize-me.qcow2
+    protocol type: file
+    file length: 2.38 MiB (2490368 bytes)
+    disk size: 2.32 MiB
+[exit 0]
+$ qemu-img resize resize-me.qcow2 +2G
+Image resized.
+[exit 0]
+$ qemu-img info resize-me.qcow2
+image: resize-me.qcow2
+file format: qcow2
+virtual size: 10 GiB (10737418240 bytes)
+disk size: 2.32 MiB
+cluster_size: 65536
+Format specific information:
+    compat: 1.1
+    compression type: zlib
+    lazy refcounts: false
+    refcount bits: 16
+    corrupt: false
+    extended l2: false
+Child node '/file':
+    filename: resize-me.qcow2
+    protocol type: file
+    file length: 2.38 MiB (2490880 bytes)
+    disk size: 2.32 MiB
+[exit 0]

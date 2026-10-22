@@ -1,0 +1,84 @@
+The lab — what the specimens are
+====================================================================
+
+The lab is one specimen machine, taken apart
+on the command line where every part is
+visible. It was built and exercised on the
+guide's build machine: Linux x86_64, 2 cores,
+7.7 GiB of memory shared with other work, and
+— the fact that shapes everything — no usable
+hardware accelerator: /dev/kvm absent, no
+vmx/svm flags in /proc/cpuinfo. QEMU 8.2.2
+(Debian) supplied qemu-system-x86_64,
+qemu-img, and qemu-io. Every capture is in
+virtual-machines-lab/transcripts/ (t00–t09).
+
+The disk specimen (chapters 3, 5, 6, 10)
+    disks/specimen.qcow2 — a qcow2 image,
+    virtual size 8 GiB, occupying 196 KiB at
+    creation (thin provisioning). Two 1 MiB
+    patterns written with qemu-io — 0x41 at
+    offset 0, 0x42 at offset 512 MiB — brought
+    its disk size to 2.32 MiB. It was checked
+    (clean), converted to raw, VMDK, VDI, and
+    VHDX, compared byte-for-byte against its
+    raw conversion (identical), resized on a
+    disposable copy (8 to 10 GiB), and
+    snapshotted on another copy: pattern
+    overwritten with 0x5a, snapshot applied,
+    the original 0x41 bytes read back. The
+    specimen raw image (specimen.raw) exists
+    to contrast file length with disk size:
+    8 GiB long, 4 KiB occupied.
+
+The guest specimen (chapter 3)
+    Tiny Core Linux 16.x (x86), fetched as
+    the project's own vmlinuz (5.6 MB) and
+    core.gz (13 MB) from
+    tinycorelinux.net/16.x/x86/release/
+    distribution_files/, each verified
+    against the project's published .md5.txt
+    (both OK). The first mirror tried
+    (dist.ibiblio.org) returned empty replies;
+    that is in the transcript too. Tiny Core
+    was chosen because it is small, real, and
+    publishes checksums — small enough to
+    boot under software emulation on a busy
+    sandbox, honest enough to verify on the
+    way in.
+
+The boot (chapter 3)
+    QEMU ran the guest with 256 MiB and 1
+    processor, no display, the serial console
+    written to a log, and a pretend Intel
+    e1000 network card on user (NAT)
+    networking. No -accel flag: TCG emulation
+    is QEMU's default when KVM is absent, and
+    KVM's refusal is captured in t01. The log
+    (t09, 386 lines with the capture header)
+    reaches the guest kernel's banner
+    (Linux 6.12.11-tinycore), Tiny Core's
+    startup completing, the hostname set, a
+    root login on tty1, and the network
+    card's link up. The run was stopped by a
+    420-second timeout; a booted guest does
+    not exit on its own, and exit 124 is the
+    timeout's signature, not the guest's.
+
+What the lab is not
+    No graphical install was run (no display,
+    no accelerator). No VirtualBox, VMware,
+    Hyper-V, virt-manager, or Proxmox was
+    installed. No guest tools, shared folders,
+    or device passthrough were exercised. Those
+    parts of the guide are written from the
+    vendors' documentation and the ledger in
+    criteria.md says which, chapter by chapter.
+
+Scratch and safety
+    All build work lived under
+    ~/workspace/virtual-machines-build/. Every
+    name in the lab is invented; no real
+    machine, disk, or network was touched. The
+    only deletions were of disposable copies
+    made for the resize and snapshot runs.

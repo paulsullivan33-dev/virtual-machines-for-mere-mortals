@@ -1,0 +1,32 @@
+$ qemu-io -c write -P 0x41 0 1M specimen.qcow2
+wrote 1048576/1048576 bytes at offset 0
+1 MiB, 1 ops; 00.11 sec (8.761 MiB/sec and 8.7607 ops/sec)
+[exit 0]
+$ qemu-io -c write -P 0x42 512M 1M specimen.qcow2
+wrote 1048576/1048576 bytes at offset 536870912
+1 MiB, 1 ops; 00.12 sec (8.243 MiB/sec and 8.2426 ops/sec)
+[exit 0]
+$ qemu-img info specimen.qcow2
+image: specimen.qcow2
+file format: qcow2
+virtual size: 8 GiB (8589934592 bytes)
+disk size: 2.32 MiB
+cluster_size: 65536
+Format specific information:
+    compat: 1.1
+    compression type: zlib
+    lazy refcounts: false
+    refcount bits: 16
+    corrupt: false
+    extended l2: false
+Child node '/file':
+    filename: specimen.qcow2
+    protocol type: file
+    file length: 2.38 MiB (2490368 bytes)
+    disk size: 2.32 MiB
+[exit 0]
+$ qemu-img check specimen.qcow2
+No errors were found on the image.
+32/131072 = 0.02% allocated, 0.00% fragmented, 0.00% compressed clusters
+Image end offset: 2490368
+[exit 0]

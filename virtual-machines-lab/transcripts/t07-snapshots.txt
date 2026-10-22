@@ -1,0 +1,32 @@
+$ qemu-io -c read -v 0 16 snaptest.qcow2
+00000000:  41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41  AAAAAAAAAAAAAAAA
+read 16/16 bytes at offset 0
+16 bytes, 1 ops; 00.01 sec (1.549 KiB/sec and 99.1527 ops/sec)
+[exit 0]
+$ qemu-img snapshot -c before-changes snaptest.qcow2
+[exit 0]
+$ qemu-io -c write -P 0x5a 0 1M snaptest.qcow2
+wrote 1048576/1048576 bytes at offset 0
+1 MiB, 1 ops; 00.16 sec (6.296 MiB/sec and 6.2964 ops/sec)
+[exit 0]
+$ qemu-io -c read -v 0 16 snaptest.qcow2
+00000000:  5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a  ZZZZZZZZZZZZZZZZ
+read 16/16 bytes at offset 0
+16 bytes, 1 ops; 00.00 sec (175.436 KiB/sec and 11227.8811 ops/sec)
+[exit 0]
+$ qemu-img snapshot -l snaptest.qcow2
+Snapshot list:
+ID        TAG               VM SIZE                DATE     VM CLOCK     ICOUNT
+1         before-changes        0 B 2026-10-22 00:16:57 00:00:00.000          0
+[exit 0]
+$ qemu-img snapshot -a before-changes snaptest.qcow2
+[exit 0]
+$ qemu-io -c read -v 0 16 snaptest.qcow2
+00000000:  41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41  AAAAAAAAAAAAAAAA
+read 16/16 bytes at offset 0
+16 bytes, 1 ops; 00.00 sec (155.178 KiB/sec and 9931.3742 ops/sec)
+[exit 0]
+$ qemu-img snapshot -d before-changes snaptest.qcow2
+[exit 0]
+$ qemu-img snapshot -l snaptest.qcow2
+[exit 0]

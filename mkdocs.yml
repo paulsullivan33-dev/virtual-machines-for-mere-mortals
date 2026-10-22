@@ -1,0 +1,27 @@
+site_name: Virtual Machines for Mere Mortals
+site_description: Plain-language virtual machines. What a VM is, choosing a hypervisor, creating and sizing a first VM, virtual disks and formats, snapshots and clones and backups, networking modes, moving machines between hosts, and the honest limits of performance and security.
+site_url: https://paulsullivan33-dev.github.io/virtual-machines-for-mere-mortals/
+
+# Guides live at the repo root (nice for GitHub browsing).
+# The deploy workflow copies them into docs/ before building.
+theme:
+  name: material
+
+nav:
+  - Home: index.md
+  - What a Virtual Machine Is: what-a-virtual-machine-is.md
+  - Choosing a Hypervisor: choosing-a-hypervisor.md
+  - Your First Virtual Machine: your-first-virtual-machine.md
+  - Sizing Honestly: sizing-honestly.md
+  - Virtual Disks and Formats: virtual-disks-and-formats.md
+  - Snapshots, Clones, and Backups: snapshots-clones-and-backups.md
+  - Networking Modes: networking-modes.md
+  - Sharing and Guest Tools: sharing-and-guest-tools.md
+  - Devices and Passthrough: devices-and-passthrough.md
+  - Moving Machines: moving-machines.md
+  - Performance and Security Limits: performance-and-security-limits.md
+  - Recipes: recipes.md
+  - The Neighbours: the-neighbours.md
+  - Troubleshooting: troubleshooting.md
+  - Glossary: glossary.md
+  - Writing Criteria: criteria.md

@@ -1,0 +1,11 @@
+Guest image: Tiny Core Linux 16.x (x86), kernel and rootfs fetched as separate files
+from the project's distribution directory, with the project's own .md5.txt files.
+First mirror (dist.ibiblio.org) returned empty replies; tinycorelinux.net served the files.
+$ curl -O http://tinycorelinux.net/16.x/x86/release/distribution_files/vmlinuz (and core.gz, and both .md5.txt files)
+$ ls -lh
+-rw-rw---- 1 root nogroup  13M Oct 22 00:17 core.gz
+-rw-rw---- 1 root nogroup 5.6M Oct 22 00:17 vmlinuz
+$ md5sum -c vmlinuz.md5.txt
+vmlinuz: OK
+$ md5sum -c core.gz.md5.txt
+core.gz: OK

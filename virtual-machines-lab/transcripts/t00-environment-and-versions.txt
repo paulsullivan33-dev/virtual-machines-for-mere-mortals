@@ -1,0 +1,22 @@
+$ uname -m && nproc
+x86_64
+2
+[exit 0]
+$ ls -la /dev/kvm
+ls: cannot access '/dev/kvm': No such file or directory
+[exit 2]
+$ grep -c -E 'vmx|svm' /proc/cpuinfo
+0
+[exit 1]
+$ qemu-system-x86_64 --version
+QEMU emulator version 8.2.2 (Debian 1:8.2.2+ds-0ubuntu1.18)
+Copyright (c) 2003-2023 Fabrice Bellard and the QEMU Project developers
+[exit 0]
+$ qemu-img --version
+qemu-img version 8.2.2 (Debian 1:8.2.2+ds-0ubuntu1.18)
+Copyright (c) 2003-2023 Fabrice Bellard and the QEMU Project developers
+[exit 0]
+$ qemu-io --version
+qemu-io version 8.2.2 (Debian 1:8.2.2+ds-0ubuntu1.18)
+Copyright (c) 2003-2023 Fabrice Bellard and the QEMU Project developers
+[exit 0]

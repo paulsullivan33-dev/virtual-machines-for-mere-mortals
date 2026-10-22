@@ -1,0 +1,9 @@
+$ qemu-system-x86_64 -accel help
+Accelerators supported in QEMU binary:
+tcg
+kvm
+[exit 0]
+$ qemu-system-x86_64 -accel kvm -machine none -display none -S (given 5 seconds, then stopped)
+Could not access KVM kernel module: No such file or directory
+qemu-system-x86_64: -accel kvm: failed to initialize kvm: No such file or directory
+[exit 1]

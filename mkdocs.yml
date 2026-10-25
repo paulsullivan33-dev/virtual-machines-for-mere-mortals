@@ -1,6 +1,7 @@
 site_name: Virtual Machines for Mere Mortals
 site_description: Plain-language virtual machines. What a VM is, choosing a hypervisor, creating and sizing a first VM, virtual disks and formats, snapshots and clones and backups, networking modes, moving machines between hosts, and the honest limits of performance and security.
 site_url: https://paulsullivan33-dev.github.io/virtual-machines-for-mere-mortals/
+copyright: 'Part of <a href="https://paulsullivan33-dev.github.io/mere-mortals/">For Mere Mortals</a> · Text <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>, code MIT'
 
 # Guides live at the repo root (nice for GitHub browsing).
 # The deploy workflow copies them into docs/ before building.
